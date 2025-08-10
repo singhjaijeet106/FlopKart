@@ -2,6 +2,7 @@ package com.flipkart.inventory.app.repository.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flipkart.inventory.app.constant.InventoryAction;
 
 import jakarta.persistence.Column;
@@ -45,5 +46,6 @@ public class InventoryHistory {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id", nullable = false)
+    @JsonIgnore
     private Inventory inventory;
 }

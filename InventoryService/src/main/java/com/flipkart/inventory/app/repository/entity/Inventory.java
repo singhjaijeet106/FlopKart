@@ -38,4 +38,6 @@ public class Inventory {
     @Column(nullable = false)
     private Integer quantity;
 	
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InventoryHistory> history;
 }

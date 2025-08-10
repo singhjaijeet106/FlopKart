@@ -1,5 +1,7 @@
 package com.flipkart.inventory.app.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +16,5 @@ public class InventoryModel {
 	private String inventoryId;
     private String productId;
     private Integer quantity;
-	
+	private List<InventoryHistoryModel> historyModels;
 }

@@ -23,5 +23,5 @@ private Long id;
     
     private String orderId; // New field to link stock change to an order
     private LocalDateTime timestamp;
-    private Inventory inventory;
+    private String inventory;
 }

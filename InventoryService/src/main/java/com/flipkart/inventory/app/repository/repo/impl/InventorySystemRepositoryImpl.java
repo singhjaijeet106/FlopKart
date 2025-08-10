@@ -29,6 +29,11 @@ public class InventorySystemRepositoryImpl implements InventorySystemRepository 
 
 	@Override
 	public Inventory getInventoryByProductId(String productId) {
+		Inventory inventory = inventoryRepository.findByProductId(productId).orElse(null);
+		if(inventory!=null) {
+			List<InventoryHistory> inventoryHistories = inventoryHistoryRepository.findByProductIdOrderByTimestampDesc(productId);
+			inventory.setHistory(inventoryHistories);
+		}
 		return inventoryRepository.findByProductId(productId).orElse(null);
 	}
 
@@ -68,7 +73,7 @@ public class InventorySystemRepositoryImpl implements InventorySystemRepository 
         if (inventory.getQuantity() < quantity) {
             throw new InventoryValidationException("Not enough stock");
         }
-        inventory.setQuantity(inventory.getQuantity() - quantity);
+        inventory.setQuantity( (reduce)?inventory.getQuantity() - quantity:inventory.getQuantity() + quantity );
         inventory = inventoryRepository.save(inventory);
         
         InventoryHistory inventoryHistory = InventoryHistory.builder()
