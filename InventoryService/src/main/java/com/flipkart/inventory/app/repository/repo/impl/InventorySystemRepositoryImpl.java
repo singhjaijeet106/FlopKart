@@ -1,6 +1,7 @@
 package com.flipkart.inventory.app.repository.repo.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -41,7 +42,7 @@ public class InventorySystemRepositoryImpl implements InventorySystemRepository 
 				.build();
 		
 		if (inventory == null) {
-			inventory = Inventory.builder().inventoryId(inventoryHelper.generateUniqueInventoryId()).quantity(quantity)
+			inventory = Inventory.builder().productId(productId).inventoryId(inventoryHelper.generateUniqueInventoryId()).quantity(quantity)
 					.build();
 			inventoryHistory.setAction(InventoryAction.ADD);
 			inventoryHistory.setQuantityChange(quantity);
@@ -89,6 +90,12 @@ public class InventorySystemRepositoryImpl implements InventorySystemRepository 
 			inventoryHistory.setQuantityChange(inventoryHistory.getQuantityChange()*-1);
 		}
 		inventoryHistoryRepository.save(inventoryHistory);
+	}
+
+	@Override
+	public List<InventoryHistory> getInventoryHistory(String productId) {
+		List<InventoryHistory> history = inventoryHistoryRepository.findByProductIdOrderByTimestampDesc(productId);
+		return history;
 	}
 
 }

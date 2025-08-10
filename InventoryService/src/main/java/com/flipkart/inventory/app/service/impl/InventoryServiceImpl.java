@@ -1,12 +1,16 @@
 package com.flipkart.inventory.app.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flipkart.inventory.app.exception.InventoryValidationException;
 import com.flipkart.inventory.app.helper.InventoryHelper;
+import com.flipkart.inventory.app.model.InventoryHistoryModel;
 import com.flipkart.inventory.app.model.InventoryModel;
 import com.flipkart.inventory.app.repository.entity.Inventory;
+import com.flipkart.inventory.app.repository.entity.InventoryHistory;
 import com.flipkart.inventory.app.repository.repo.InventorySystemRepository;
 import com.flipkart.inventory.app.service.InventoryService;
 
@@ -61,4 +65,13 @@ public class InventoryServiceImpl implements InventoryService {
 		return inventoryHelper.convertToInventoryModel(inventory);
 	}
 
+	@Override
+	public List<InventoryHistoryModel> getInventoryHistory(String productId) {
+		if(productId==null || productId.isEmpty()) {
+			throw new InventoryValidationException("product id is required" );
+		}
+		List<InventoryHistory> history = inventoryRepository.getInventoryHistory(productId);
+		
+		return history.stream().map(inventoryHelper::convertToInventoryHistoryModel).toList();
+	}
 }
