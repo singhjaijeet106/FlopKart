@@ -1,1 +1,4 @@
 docker run --name my-postgres -e POSTGRES_DB=order_service -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -p 5432:5432 -d postgres
+
+
+docker run -d --name mysql-inventory -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=inventory_service -p 3306:3306 --network host mysql:8.0
